@@ -18,7 +18,7 @@ export class GroupeTpService {
     }
 
     public addGroupeTpLocalCache(groupe : GroupeTp[]) : void{
-        localStorage.setItem('listGroupeTp', JSON.stringify(groupe))
+        localStorage.setItem('listGroupeTp', JSON.stringify(groupe));
     }
 
     public deleteGroupe(nomGroupe : String): Observable<any>{

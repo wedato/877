@@ -84,7 +84,7 @@ public class CoursService {
     }
 
     public Cours addGroupeTPAuCours(String nomCours, String numeroGroupe) throws GroupeInnexistantException, CoursInnexistantException, GroupeTpDejaAjouterException {
-        Optional<GroupeTp> groupeTp = groupeTpRepository.findByNumeroGroupe(numeroGroupe);
+        Optional<GroupeTp> groupeTp = groupeTpRepository.findByNomGroupe(numeroGroupe);
         Optional<Cours> cours = coursRepository.findCoursByNom(nomCours);
         if(cours.isEmpty()){
             throw new CoursInnexistantException();

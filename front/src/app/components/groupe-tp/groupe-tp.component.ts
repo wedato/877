@@ -10,7 +10,7 @@ import {NgForm} from "@angular/forms";
 import * as e from 'express';
 
 @Component({
-  selector: 'groupe-tp',
+  selector: 'app-groupe-tp',
   templateUrl: './groupe-tp.component.html',
   styleUrls: ['./groupe-tp.component.css']
 })
@@ -21,6 +21,7 @@ export class GroupeTpComponent implements OnInit {
   public listGroupeTp : GroupeTp[]
   groupe: GroupeTp
   user : User
+  groupeCreated : string
   private sub : Subscription[] = []
   public editGroupe = new GroupeTp()
   public currentGroupeTpName : String
@@ -29,7 +30,6 @@ export class GroupeTpComponent implements OnInit {
   constructor(public authenticationService: AuthenticationService, public groupeTpService: GroupeTpService, private notificationService: NotificationService ) { }
 
   ngOnInit(): void {
-    this.listGroupeTp;
     this.user = this.authenticationService.getUserFromLocalCache()
     this.getGroupeTp(true);
   }
@@ -79,15 +79,12 @@ export class GroupeTpComponent implements OnInit {
             //refresh list
             this.getGroupeTp(true)
           },
-          error: (errorResponse) => {
-            this.sendNotification(NotificationType.ERROR, `Une erreur est survenu, veuillez ressayez`)
-          }
         }
       )
     )
 }
 
-onAddNewGroupeTp(groupeForm: NgForm):void {
+public onAddNewGroupeTp(groupeForm: NgForm):void {
   const formData = this.groupeTpService.createGroupeFormData(groupeForm.value);
   this.sub.push(
     this.groupeTpService.addGroupeTp(formData).subscribe({

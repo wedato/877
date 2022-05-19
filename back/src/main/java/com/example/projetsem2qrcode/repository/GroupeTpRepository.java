@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface GroupeTpRepository extends MongoRepository<GroupeTp,String> {
 
-    Optional<GroupeTp> findByNumeroGroupe(String numeroGroupe);
+    Optional<GroupeTp> findByNomGroupe(String nomGroupe);
 }

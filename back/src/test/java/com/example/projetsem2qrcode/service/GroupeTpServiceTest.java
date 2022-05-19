@@ -38,10 +38,10 @@ class GroupeTpServiceTest {
     @Test
     void testSaveGroupeTp() throws GroupeDejaCreerException, NomGroupeNonValideException {
         when(this.groupeTpRepository.save((GroupeTp) any())).thenReturn(new GroupeTp("Numero Groupe"));
-        when(this.groupeTpRepository.findByNumeroGroupe((String) any()))
+        when(this.groupeTpRepository.findByNomGroupe((String) any()))
                 .thenReturn(Optional.of(new GroupeTp("Numero Groupe")));
         assertThrows(GroupeDejaCreerException.class, () -> this.groupeTpService.saveGroupeTp("Nom Groupe"));
-        verify(this.groupeTpRepository).findByNumeroGroupe((String) any());
+        verify(this.groupeTpRepository).findByNomGroupe((String) any());
     }
 
     /**
@@ -51,10 +51,10 @@ class GroupeTpServiceTest {
     void testSaveGroupeTp2() throws GroupeDejaCreerException, NomGroupeNonValideException {
         GroupeTp groupeTp = new GroupeTp("Numero Groupe");
         when(this.groupeTpRepository.save((GroupeTp) any())).thenReturn(groupeTp);
-        when(this.groupeTpRepository.findByNumeroGroupe((String) any())).thenReturn(Optional.empty());
+        when(this.groupeTpRepository.findByNomGroupe((String) any())).thenReturn(Optional.empty());
         assertSame(groupeTp, this.groupeTpService.saveGroupeTp("Nom Groupe"));
         verify(this.groupeTpRepository).save((GroupeTp) any());
-        verify(this.groupeTpRepository).findByNumeroGroupe((String) any());
+        verify(this.groupeTpRepository).findByNomGroupe((String) any());
     }
 
 
@@ -64,9 +64,9 @@ class GroupeTpServiceTest {
     @Test
     void testSaveGroupeTp4() throws GroupeDejaCreerException, NomGroupeNonValideException {
         when(this.groupeTpRepository.save((GroupeTp) any())).thenReturn(new GroupeTp("Numero Groupe"));
-        when(this.groupeTpRepository.findByNumeroGroupe((String) any())).thenReturn(Optional.empty());
+        when(this.groupeTpRepository.findByNomGroupe((String) any())).thenReturn(Optional.empty());
         assertThrows(NomGroupeNonValideException.class, () -> this.groupeTpService.saveGroupeTp(null));
-        verify(this.groupeTpRepository).findByNumeroGroupe((String) any());
+        verify(this.groupeTpRepository).findByNomGroupe((String) any());
     }
 
     /**
@@ -75,9 +75,9 @@ class GroupeTpServiceTest {
     @Test
     void testSaveGroupeTp5() throws GroupeDejaCreerException, NomGroupeNonValideException {
         when(this.groupeTpRepository.save((GroupeTp) any())).thenReturn(new GroupeTp("Numero Groupe"));
-        when(this.groupeTpRepository.findByNumeroGroupe((String) any())).thenReturn(Optional.empty());
+        when(this.groupeTpRepository.findByNomGroupe((String) any())).thenReturn(Optional.empty());
         assertThrows(NomGroupeNonValideException.class, () -> this.groupeTpService.saveGroupeTp(""));
-        verify(this.groupeTpRepository).findByNumeroGroupe((String) any());
+        verify(this.groupeTpRepository).findByNomGroupe((String) any());
     }
 
     @BeforeEach
@@ -94,10 +94,10 @@ class GroupeTpServiceTest {
         //given
         GroupeTp groupeTp = new GroupeTp("Numero Groupe");
         //when
-        when(this.groupeTpRepository.findByNumeroGroupe((String) any())).thenReturn(Optional.of(groupeTp));
+        when(this.groupeTpRepository.findByNomGroupe((String) any())).thenReturn(Optional.of(groupeTp));
         //assert
         assertSame(groupeTp, this.groupeTpService.findGroupeByNumGroupe("Numero Groupe"));
-        verify(this.groupeTpRepository).findByNumeroGroupe((String) any());
+        verify(this.groupeTpRepository).findByNomGroupe((String) any());
     }
 
     /**
@@ -106,10 +106,10 @@ class GroupeTpServiceTest {
     @Test
     void testFindGroupeByNumGroupeKo1() throws GroupeInnexistantException {
         //when
-        when(this.groupeTpRepository.findByNumeroGroupe((String) any())).thenReturn(Optional.empty());
+        when(this.groupeTpRepository.findByNomGroupe((String) any())).thenReturn(Optional.empty());
         //assert
         assertThrows(GroupeInnexistantException.class, () -> this.groupeTpService.findGroupeByNumGroupe("Numero Groupe"));
-        verify(this.groupeTpRepository).findByNumeroGroupe((String) any());
+        verify(this.groupeTpRepository).findByNomGroupe((String) any());
     }
 
     /**
@@ -149,11 +149,11 @@ class GroupeTpServiceTest {
     void testDeleteGroupeByNumGroupe() throws GroupeInnexistantException {
         //when
         doNothing().when(this.groupeTpRepository).deleteById((String) any());
-        when(this.groupeTpRepository.findByNumeroGroupe((String) any()))
+        when(this.groupeTpRepository.findByNomGroupe((String) any()))
                 .thenReturn(Optional.of(new GroupeTp("Numero Groupe")));
         //assert
         assertThrows(GroupeInnexistantException.class, () -> this.groupeTpService.deleteGroupeByNumGroupe("Numero Groupe"));
-        verify(this.groupeTpRepository).findByNumeroGroupe((String) any());
+        verify(this.groupeTpRepository).findByNomGroupe((String) any());
         verify(this.groupeTpRepository).deleteById((String) any());
     }
 
@@ -166,10 +166,10 @@ class GroupeTpServiceTest {
     void testDeleteGroupeByNumGroupe2() throws GroupeInnexistantException {
         //when
         doNothing().when(this.groupeTpRepository).deleteById((String) any());
-        when(this.groupeTpRepository.findByNumeroGroupe((String) any())).thenReturn(Optional.empty());
+        when(this.groupeTpRepository.findByNomGroupe((String) any())).thenReturn(Optional.empty());
         //assert
         assertThrows(GroupeInnexistantException.class, () -> this.groupeTpService.deleteGroupeByNumGroupe("Numero Groupe"));
-        verify(this.groupeTpRepository).findByNumeroGroupe((String) any());
+        verify(this.groupeTpRepository).findByNomGroupe((String) any());
     }
 
     /**
@@ -181,7 +181,7 @@ class GroupeTpServiceTest {
         //when
         GroupeTp groupeTp = new GroupeTp("Numero Groupe");
         when(this.groupeTpRepository.save((GroupeTp) any())).thenReturn(groupeTp);
-        when(this.groupeTpRepository.findByNumeroGroupe((String) any()))
+        when(this.groupeTpRepository.findByNomGroupe((String) any()))
                 .thenReturn(Optional.of(new GroupeTp("Numero Groupe")));
 
         //given
@@ -207,7 +207,7 @@ class GroupeTpServiceTest {
         //assert
         assertSame(groupeTp, this.groupeTpService.addEtudiantInGroupe("Groupe", "Num Etudiant"));
         verify(this.groupeTpRepository).save((GroupeTp) any());
-        verify(this.groupeTpRepository).findByNumeroGroupe((String) any());
+        verify(this.groupeTpRepository).findByNomGroupe((String) any());
         verify(this.etudiantRepository).save((Etudiant) any());
         verify(this.etudiantRepository).findEtudiantByNumEtudiant((String) any());
     }
@@ -241,7 +241,7 @@ class GroupeTpServiceTest {
         groupeTp.getListeEtudiantGroupe().add(etudiant);
         //when
         when(this.groupeTpRepository.save((GroupeTp) any())).thenReturn(groupeTp);
-        when(this.groupeTpRepository.findByNumeroGroupe((String) any())).thenReturn(Optional.of(groupeTp));
+        when(this.groupeTpRepository.findByNomGroupe((String) any())).thenReturn(Optional.of(groupeTp));
         when(this.etudiantRepository.save((Etudiant) any())).thenReturn(etudiant1);
         when(this.etudiantRepository.findEtudiantByNumEtudiant((String) any())).thenReturn(ofResult);
         //assert
@@ -256,7 +256,7 @@ class GroupeTpServiceTest {
             throws EtudiantDejaDansUnGroupeException, EtudiantInnexistantException, GroupeInnexistantException {
         //when
         when(this.groupeTpRepository.save((GroupeTp) any())).thenReturn(new GroupeTp("Numero Groupe"));
-        when(this.groupeTpRepository.findByNumeroGroupe((String) any())).thenReturn(Optional.empty());
+        when(this.groupeTpRepository.findByNomGroupe((String) any())).thenReturn(Optional.empty());
 
         //given
         Etudiant etudiant = new Etudiant();
@@ -281,7 +281,7 @@ class GroupeTpServiceTest {
         //assert
         assertThrows(GroupeInnexistantException.class,
                 () -> this.groupeTpService.addEtudiantInGroupe("Groupe", "Num Etudiant"));
-        verify(this.groupeTpRepository).findByNumeroGroupe((String) any());
+        verify(this.groupeTpRepository).findByNomGroupe((String) any());
         verify(this.etudiantRepository).findEtudiantByNumEtudiant((String) any());
     }
 
@@ -293,7 +293,7 @@ class GroupeTpServiceTest {
             throws EtudiantDejaDansUnGroupeException, EtudiantInnexistantException, GroupeInnexistantException {
         //when
         when(this.groupeTpRepository.save((GroupeTp) any())).thenReturn(new GroupeTp("Numero Groupe"));
-        when(this.groupeTpRepository.findByNumeroGroupe((String) any()))
+        when(this.groupeTpRepository.findByNomGroupe((String) any()))
                 .thenReturn(Optional.of(new GroupeTp("Numero Groupe")));
 
         //given
@@ -310,7 +310,7 @@ class GroupeTpServiceTest {
         //assert
         assertThrows(EtudiantInnexistantException.class,
                 () -> this.groupeTpService.addEtudiantInGroupe("Groupe", "Num Etudiant"));
-        verify(this.groupeTpRepository).findByNumeroGroupe((String) any());
+        verify(this.groupeTpRepository).findByNomGroupe((String) any());
         verify(this.etudiantRepository).findEtudiantByNumEtudiant((String) any());
     }
 
@@ -321,11 +321,11 @@ class GroupeTpServiceTest {
     void testDeleteAllEtudiantInGroupeTp() {
         //when
         when(this.groupeTpRepository.save((GroupeTp) any())).thenReturn(new GroupeTp("Numero Groupe"));
-        when(this.groupeTpRepository.findByNumeroGroupe((String) any()))
+        when(this.groupeTpRepository.findByNomGroupe((String) any()))
                 .thenReturn(Optional.of(new GroupeTp("Numero Groupe")));
         this.groupeTpService.deleteAllEtudiantInGroupeTp("Numero Groupe");
         //assert
         verify(this.groupeTpRepository).save((GroupeTp) any());
-        verify(this.groupeTpRepository).findByNumeroGroupe((String) any());
+        verify(this.groupeTpRepository).findByNomGroupe((String) any());
     }
 }

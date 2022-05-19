@@ -26,7 +26,7 @@ public class GroupeTpController {
         try {
             GroupeTp newGroupe = groupeTpService.saveGroupeTp(nomGroupe);
             URI nextLocation = ServletUriComponentsBuilder.fromCurrentRequestUri()
-                    .path("/{numeroGroupe}").buildAndExpand(nomGroupe).toUri();
+                    .path("/{nomGroupe}").buildAndExpand(nomGroupe).toUri();
             return ResponseEntity.created(nextLocation).body(newGroupe);
         } catch (GroupeDejaCreerException e) {
             return ResponseEntity.status(409).build();

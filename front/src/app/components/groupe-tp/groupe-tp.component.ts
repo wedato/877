@@ -17,7 +17,7 @@ import * as e from 'express';
 export class GroupeTpComponent implements OnInit {
 
   public eleveGroupe : User[]
-  
+
   public listGroupeTp : GroupeTp[]
   groupe: GroupeTp
   user : User
@@ -72,6 +72,7 @@ export class GroupeTpComponent implements OnInit {
   }
 
   public onDeleteGroupeTp(nomGroupe: string) {
+    console.log(nomGroupe)
     this.sub.push(
       this.groupeTpService.deleteGroupe(nomGroupe).subscribe({
           next: (response) => {

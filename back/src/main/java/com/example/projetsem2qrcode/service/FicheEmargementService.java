@@ -22,6 +22,9 @@ public class FicheEmargementService {
         this.userService = userService;
     }
 
+    public FicheEmargement addFiche(FicheEmargement ficheEmargement){
+        return ficheEmargementRepository.save(ficheEmargement);
+    }
     public List<FicheEmargement> getAllFiche(){
         return ficheEmargementRepository.findAll();
     }

@@ -17,7 +17,7 @@ import org.springframework.web.filter.CorsFilter;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import static com.example.projetsem2qrcode.constant.FileConstant.USER_FOLDER;
@@ -38,7 +38,10 @@ public class ProjetSem2QRcodeApplication {
         UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.setAllowCredentials(true);
-        corsConfiguration.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
+//        corsConfiguration.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
+        corsConfiguration.addAllowedOrigin("http://localhost:4200");
+        corsConfiguration.addAllowedOrigin("http://localhost:8100");
+//        corsConfiguration.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
         corsConfiguration.setAllowedHeaders(Arrays.asList("Origin", "Access-Control-Allow-Origin", "Content-Type",
                 "Accept", "Jwt-Token", "Authorization", "Origin, Accept", "X-Requested-With",
                 "Access-Control-Request-Method", "Access-Control-Request-Headers"));
@@ -72,13 +75,24 @@ public class ProjetSem2QRcodeApplication {
             listeUserInscrit.add(admin);
 
 
-            FicheEmargement ficheEmargement = new FicheEmargement("WebService");
-            ficheEmargement.setListeEtudiantSigne(listeUserInscrit);
-            ficheRepository.save(ficheEmargement);
-            FicheEmargement nouvelleFiche = ficheRepository.findByNomCours("WebService");
-            System.out.println(nouvelleFiche.getListeEtudiantSigne());
-            System.out.println(ficheEmargement.getId());
-            ficheService.signerFicheEmargementDebut(ficheEmargement.id,"jo");
+            FicheEmargement webService = new FicheEmargement("WebService");
+            webService.setImageUrl("https://thumbs.dreamstime.com/b/vector-global-web-service-icon-isolated-black-flat-design-concept-163719580.jpg");
+            webService.setListeEtudiantSigne(listeUserInscrit);
+            webService.setListeEleves(List.of("Jonathan","Louis","Clement","Mickael"));
+            webService.setDateCours(new Date());
+            ficheRepository.save(webService);
+
+//            FicheEmargement webService = new FicheEmargement("WebService");
+//            webService.setImageUrl("https://thumbs.dreamstime.com/b/vector-global-web-service-icon-isolated-black-flat-design-concept-163719580.jpg");
+//            webService.setListeEtudiantSigne(listeUserInscrit);
+//            webService.setListeEleves(List.of("Jonathan","Louis","Clement","Mickael"));
+//            webService.setDateCours(new Date());
+//            ficheRepository.save(webService);
+
+
+
+//            FicheEmargement nouvelleFiche = ficheRepository.findByNomCours("WebService");
+//            ficheService.signerFicheEmargementDebut(ficheEmargement.getId(),"jo");
 
 
 

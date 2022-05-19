@@ -15,11 +15,22 @@ export class FicheEmargementPage implements OnInit, OnDestroy{
   constructor(private ficheEmargementService: FicheEmargementService) { }
 
   ngOnInit() {
-
+    this.getListeFiches();
   }
 
   ionViewWillEnter(){
-    this.listeFicheEmargements = this.ficheEmargementService.getAllFiches();
+    this.getListeFiches()
+  }
+
+  public getListeFiches(){
+    this.ficheEmargementService.getAllFiches().subscribe( {
+      next:(response) => {
+        this.listeFicheEmargements = response;
+      },
+      error:(errorResponse) => {
+      console.error(errorResponse);
+    }
+    })
   }
 
   ngOnDestroy(): void {

@@ -82,17 +82,6 @@ public class ProjetSem2QRcodeApplication {
             webService.setDateCours(new Date());
             ficheRepository.save(webService);
 
-//            FicheEmargement webService = new FicheEmargement("WebService");
-//            webService.setImageUrl("https://thumbs.dreamstime.com/b/vector-global-web-service-icon-isolated-black-flat-design-concept-163719580.jpg");
-//            webService.setListeEtudiantSigne(listeUserInscrit);
-//            webService.setListeEleves(List.of("Jonathan","Louis","Clement","Mickael"));
-//            webService.setDateCours(new Date());
-//            ficheRepository.save(webService);
-
-
-
-//            FicheEmargement nouvelleFiche = ficheRepository.findByNomCours("WebService");
-//            ficheService.signerFicheEmargementDebut(ficheEmargement.getId(),"jo");
 
 
 

@@ -98,7 +98,7 @@ class GroupeTpControllerTest {
     @Test
     void testCreateGroupeTp() throws Exception {
         when(this.groupeTpRepository.save((GroupeTp) any())).thenReturn(new GroupeTp("Numero Groupe"));
-        when(this.groupeTpRepository.findByNumeroGroupe((String) any()))
+        when(this.groupeTpRepository.findByNomGroupe((String) any()))
                 .thenReturn(Optional.of(new GroupeTp("Numero Groupe")));
         when(this.groupeTpService.saveGroupeTp((String) any())).thenThrow(new GroupeDejaCreerException());
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/groupetp")
@@ -115,7 +115,7 @@ class GroupeTpControllerTest {
     @Test
     void testCreateGroupeTp2() throws Exception {
         when(this.groupeTpRepository.save((GroupeTp) any())).thenReturn(new GroupeTp("Numero Groupe"));
-        when(this.groupeTpRepository.findByNumeroGroupe((String) any())).thenReturn(Optional.empty());
+        when(this.groupeTpRepository.findByNomGroupe((String) any())).thenReturn(Optional.empty());
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/groupetp")
                 .param("nomGroupe", "foo");
         ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(this.groupeTpController)
@@ -130,7 +130,7 @@ class GroupeTpControllerTest {
     @Test
     void testCreateGroupeTp4() throws Exception {
         when(this.groupeTpRepository.save((GroupeTp) any())).thenReturn(new GroupeTp("Numero Groupe"));
-        when(this.groupeTpRepository.findByNumeroGroupe((String) any())).thenReturn(Optional.empty());
+        when(this.groupeTpRepository.findByNomGroupe((String) any())).thenReturn(Optional.empty());
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/groupetp").param("nomGroupe", "");
         when(this.groupeTpService.saveGroupeTp((String) any())).thenThrow(new NomGroupeNonValideException());
         ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(this.groupeTpController)

@@ -26,6 +26,7 @@ export class FicheEmargementPage implements OnInit, OnDestroy{
     this.ficheEmargementService.getAllFiches().subscribe( {
       next:(response) => {
         this.listeFicheEmargements = response;
+        this.ficheEmargementService.listeFicheEmargement = this.listeFicheEmargements
       },
       error:(errorResponse) => {
       console.error(errorResponse);

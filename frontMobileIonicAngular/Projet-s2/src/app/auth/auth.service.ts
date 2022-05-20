@@ -25,4 +25,8 @@ export class AuthService {
     this._userIsAuthenticated = false;
   }
 
+  signup(){
+
+  }
+
 }

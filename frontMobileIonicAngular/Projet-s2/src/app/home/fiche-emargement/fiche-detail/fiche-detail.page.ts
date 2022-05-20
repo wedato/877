@@ -27,6 +27,7 @@ export class FicheDetailPage implements OnInit {
         return;
       }
       this.loadedFiche = this.ficheEmargementService.getFiche(paramMap.get('ficheId'));
+      console.log(this.loadedFiche)
     })
   }
 
@@ -42,7 +43,14 @@ export class FicheDetailPage implements OnInit {
         {
           text:'Supprimer',
           handler: () => {
-            this.ficheEmargementService.deleteFiche(this.loadedFiche.id);
+            this.ficheEmargementService.deleteFiche(this.loadedFiche.id).subscribe({
+              next:() => {
+                console.log("bien suppr")
+              },
+              error:(err) => {
+                console.log(err)
+              }
+            });
             this.router.navigate(['home/tabs/liste-fiche'])
           }
         }

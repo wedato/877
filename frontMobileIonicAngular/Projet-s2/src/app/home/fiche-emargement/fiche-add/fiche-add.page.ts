@@ -46,6 +46,7 @@ export class FicheAddPage implements OnInit {
     this.ficheService.addFiche(this.form.value.nomCours, this.form.value.dateCours)
       .subscribe( {
         next:(response) => {
+          this.ficheService.listeFicheEmargement.push(response)
           this.ficheIsCreated = true;
           this.myQrCode = response.id;
         },
@@ -54,5 +55,10 @@ export class FicheAddPage implements OnInit {
         }
       })
 
+  }
+
+  reset() {
+    this.ficheIsCreated = false;
+    this.myQrCode = null;
   }
 }

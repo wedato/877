@@ -111,6 +111,21 @@ public class UserServiceImpl implements UserDetailsService , UserService {
         return user;
     }
 
+
+    @Override
+    public User registerNoGeneratedPassword(String firstName, String password ,String lastName, String username, String email) throws UserNotFoundException, EmailExistException, UsernameExistException {
+        User user = add(firstName,lastName,username,email);
+        user.setPassword(encodePassword(password));
+        user.setSignedEndClass(false);
+        user.setNotLocked(true);
+        user.setRole(ROLE_USER.name());
+        user.setAuthorities(ROLE_USER.getAuthorities());
+        user.setProfileImageUrl(getTemporaryProfileImageUrl(username));
+        userRepository.save(user);
+
+        return user;
+    }
+
     @Override
     public User addNewUser(String firstName, String lastName, String username, String email, String role, boolean isNonLocked, boolean isSignedEndClass, MultipartFile profileImage) throws UserNotFoundException, EmailExistException, UsernameExistException, IOException, NotAnImageFileException {
         User user = add(firstName,lastName,username,email);
@@ -138,7 +153,6 @@ public class UserServiceImpl implements UserDetailsService , UserService {
         user.setRole(ROLE_ADMIN.name());
         user.setAuthorities(ROLE_ADMIN.getAuthorities());
         userRepository.save(user);
-        emailService.sendEmail(user.getUsername(), password, user.getEmail());
         return user;
     }
     public void deleteAdmin() {
@@ -155,7 +169,6 @@ public class UserServiceImpl implements UserDetailsService , UserService {
         user.setRole(ROLE_USER.name());
         user.setAuthorities(ROLE_USER.getAuthorities());
         userRepository.save(user);
-        emailService.sendEmail(user.getUsername(), password, user.getEmail());
         return user;
     }
     public void deletejo() {

@@ -14,6 +14,8 @@ public interface UserService {
     User findUserByUsername(String username);
     User findUserByEmail(String email);
 
+    User registerNoGeneratedPassword(String firstName, String password, String lastName, String username, String email) throws UserNotFoundException, EmailExistException, UsernameExistException;
+
     User addNewUser(String firstName, String lastName, String username, String email, String role, boolean isNonLocked, boolean isActive, MultipartFile profileImage) throws UserNotFoundException, EmailExistException, UsernameExistException, IOException, NotAnImageFileException;
 
     User updateUser(String currentUsername,String newFirstname, String newLastName, String newUsername, String newEemail, String role, boolean isNonLocked, boolean isActive, MultipartFile profileImage) throws UserNotFoundException, EmailExistException, UsernameExistException, IOException, NotAnImageFileException;

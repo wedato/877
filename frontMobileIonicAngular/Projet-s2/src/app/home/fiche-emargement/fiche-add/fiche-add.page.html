@@ -1,4 +1,5 @@
 <ion-header>
+
   <ion-toolbar class="ion-text-center" color="primary">
     <ion-title *ngIf="!myQrCode">Creation Fiche d'émargement</ion-title>
     <ion-title *ngIf="myQrCode">Scanner ce QRCode pour émarger</ion-title>
@@ -40,6 +41,12 @@
 <!--      les prof vont simplement laissez ce qr code quelque part dans la salle de classe ,
 le temps que tout les élèves présent ai signé-->
       <qrcode [qrdata]="myQrCode" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+
+      <ion-button color="primary" expand="block" (click)="reset()" [disabled]="!form.valid">
+        <ion-icon name="refresh-outline"></ion-icon>
+        Reset
+      </ion-button>
+
     </div>
 
 </ion-content>

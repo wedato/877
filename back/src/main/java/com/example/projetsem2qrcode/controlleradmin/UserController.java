@@ -85,6 +85,22 @@ public class UserController  {
 
     }
 
+    @PostMapping("/register/no-generated-password")
+    public ResponseEntity<User> registerNoGeneratedPassword(@RequestBody User user)  {
+        try {
+            User newUser = userService.registerNoGeneratedPassword(user.getFirstName(),user.getPassword(),user.getLastName(),user.getUsername(),user.getEmail());
+            return new ResponseEntity<>(newUser, OK);
+        } catch (UserNotFoundException e) {
+            throw new ResponseStatusException(NOT_FOUND, "Utilisateur non trouvé");
+        } catch (EmailExistException e) {
+            throw new ResponseStatusException(CONFLICT,"L'email existe déjà");
+        } catch (UsernameExistException e) {
+            throw new ResponseStatusException(CONFLICT,"Le pseudo existe déjà");
+        }
+
+    }
+
+
     @PostMapping("/add")
     public ResponseEntity<User> addNewUser(@RequestParam ("firstName") String firstName,
                                            @RequestParam ("lastName") String lastName,

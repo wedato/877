@@ -12,7 +12,7 @@ export class FicheEmargementService {
    idGen:number = 2;
    private host = 'http://localhost:8080'
 
-  private listeFicheEmargement: any = [
+  public listeFicheEmargement: any = [
     // {
     //   id:'1',
     //   nomCours:'WebService',
@@ -58,8 +58,10 @@ export class FicheEmargementService {
   }
 
   deleteFiche(ficheId:string){
-    this.listeFicheEmargement = this.listeFicheEmargement.filter(ficheEmargement => {
-      return ficheEmargement.id !== ficheId;
-    });
+    // this.listeFicheEmargement = this.listeFicheEmargement.filter(ficheEmargement => {
+    //
+    //   return ficheEmargement.id !== ficheId;
+    // });
+    return this.httpClient.delete(`${this.host}/fiche/liste/${ficheId}`)
   }
 }

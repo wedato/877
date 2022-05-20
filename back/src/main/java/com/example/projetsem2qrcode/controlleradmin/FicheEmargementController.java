@@ -45,4 +45,9 @@ public class FicheEmargementController {
         ficheEmargementService.signerFicheEmargementDebut(idFiche, nomEtu);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    @DeleteMapping("/liste/{idFiche}")
+    public ResponseEntity<?> deleteById(@PathVariable String idFiche){
+        ficheEmargementService.deleteFicheById(idFiche);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }

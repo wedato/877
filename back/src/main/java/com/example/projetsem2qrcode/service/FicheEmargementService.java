@@ -28,6 +28,10 @@ public class FicheEmargementService {
     public List<FicheEmargement> getAllFiche(){
         return ficheEmargementRepository.findAll();
     }
+
+    public void deleteFicheById(String ficheId){
+        ficheEmargementRepository.deleteById(ficheId);
+    }
     public List<User> getListeEtudiantSigneByCoursName(String coursName){
         return ficheEmargementRepository.findByNomCours(coursName).getListeEtudiantSigne();
     }

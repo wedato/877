@@ -105,4 +105,22 @@ saveNewGroupe():void {
   this.clickButton('new-groupe-save')
 }
 
+public onUpdateGroupeTp() : void {
+
+  const formData = this.groupeTpService.createGroupeFormData(this.editGroupe);
+  console.log(formData)
+  this.sub.push(
+    this.groupeTpService.updateGroupeTp(formData, this.editGroupe.nomGroupe).subscribe({
+      next:(response) => {
+        this.clickButton('closeEditUserModalButton');
+        this.getGroupeTp(false);
+        this.sendNotification(NotificationType.SUCCESS, `${response.nomGroupe} a bien ete mis à jour`)
+      },
+      error:(errorResponse) => {
+        this.sendNotification(NotificationType.ERROR, `Une erreur est survenu, veuillez ressayez`)
+      }
+    })
+  )
+}
+
 }

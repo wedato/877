@@ -1,23 +1,24 @@
 <app-header></app-header>
 
-<h1 class="text-center">Pick the best plan for you</h1>
+<h1 class="text-center"><div>
+  <button type="button" class="btn btn-info" data-toggle="modal" data-target="#addGroupeModal">
+    <i class="fa fa-plus"></i>Nouveau Groupe
+  </button>
+</div></h1>
 
 <div class="pricing-box-container">
   <div *ngFor="let g of listGroupeTp" class="pricing-box text-center">
-    <label class="price">${{g?.nomGroupe}}</label>
+    <label class="price">{{g?.nomGroupe}}</label>
+    <p>Liste des étudiants</p>
     <ul class="features-list">
       <li *ngFor="let etu of eleveGroupe"><strong>{{etu?.firstName}}</strong><strong>{{etu?.lastName}}</strong></li>
     </ul>
     <button class="btn btn-outline-info" (click)="onEditGroupe(g)"><i class="fas fa-edit"></i></button>
-    <button class="btn btn-outline-danger" (click)="onDeleteGroupeTp(g.nomGroupe)"><i class="fas fa-trash"></i></button>
+    <button class="btn btn-outline-danger" data-target="#editUserModal" (click)="onDeleteGroupeTp(g.nomGroupe)"><i class="fas fa-trash"></i></button>
   </div>
 </div>
 
-<div>
-  <button type="button" class="btn btn-info" data-toggle="modal" data-target="#addGroupeModal">
-    <i class="fa fa-plus"></i>Nouveau Groupe
-  </button>
-</div>
+
 
 
 <div  class="modal draggable fade bd-example-modal-lg" id="addGroupeModal" tabindex="-1" role="dialog"
@@ -46,6 +47,34 @@
           </div>
         </div>
         <div class="modal-footer">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div  class="modal draggable fade bd-example-modal-lg" id="editUserModal" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title text-center">Edit Groupe</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div>
+            <form #editUserForm="ngForm">
+              <div class="form-group">
+                <label for="nomGroupe">Nom du Groupe</label>
+                <input name="nomGroupe" id="nomGroupe" type="text" required class="form-control">
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeEditUserModalButton">Close</button>
+          <button type="button" (click)="onUpdateGroupeTp()" [disabled]="editUserForm.invalid" class="btn btn-primary">Save changes</button>
         </div>
       </div>
     </div>

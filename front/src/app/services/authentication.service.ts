@@ -17,8 +17,6 @@ export class AuthenticationService {
 
   constructor(private http: HttpClient) {}
 
-  // login
-  // observable car les requete ca prend du mal , quand ta requete est finis hop il t'apppelle
   public login(user: User): Observable<HttpResponse<any>> {
 
     return this.http.post<HttpResponse<any>>(`${this.host}/user/login`, user, {observe: "response"}) // donne moi l'url , request body, et toute la reponse

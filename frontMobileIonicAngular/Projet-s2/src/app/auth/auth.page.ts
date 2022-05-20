@@ -19,9 +19,16 @@ export class AuthPage implements OnInit {
   ngOnInit() {
   }
 
-  onLogin() {
+  onLogin(username:string, password:string) {
     this.isLoading = true;
-    this.authService.login();
+    this.authService.login(username,password).subscribe({
+      next:(response) => {
+        const token = response.headers.get('Jwt-Token');
+        this.authService.saveToken(token);
+        this.authService.addUserToLocalCache(response.body);
+    }
+    })
+
     this.loadingCtrl.create({keyboardClose: true, message: 'Loggin in ...'})
       .then(loadingEl => {
         loadingEl.present();
@@ -42,7 +49,7 @@ export class AuthPage implements OnInit {
     const username = form.value.username;
     const password = form.value.password;
     if (this.isLogin){
-      // envoie requete au server login
+      this.onLogin(username,password)
     } else {
       // envoie requete signup
     }
@@ -51,4 +58,5 @@ export class AuthPage implements OnInit {
   onSwitchAuthMode() {
     this.isLogin = !this.isLogin;
   }
+
 }

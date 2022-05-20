@@ -1,52 +1,21 @@
 package com.example.projetsem2qrcode.controlleradmin;
 
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
-
+import com.example.projetsem2qrcode.service.UserServiceImpl;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+@ContextConfiguration(classes = {UserController.class})
+@ExtendWith(SpringExtension.class)
 class UserControllerTest {
 
-    @Test
-    void login() {
-    }
+    @Autowired
+    private UserController userController;
 
-    @Test
-    void register() {
-    }
+    @MockBean
+    private UserServiceImpl userService;
 
-    @Test
-    void addNewUser() {
-    }
 
-    @Test
-    void updateUser() {
-    }
 
-    @Test
-    void updateProfileImage() {
-    }
-
-    @Test
-    void getProfileImage() {
-    }
-
-    @Test
-    void getTempProfileImage() {
-    }
-
-    @Test
-    void getUser() {
-    }
-
-    @Test
-    void getAllUsers() {
-    }
-
-    @Test
-    void resetPassword() {
-    }
-
-    @Test
-    void deleteUser() {
-    }
 }

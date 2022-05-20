@@ -7,10 +7,7 @@ import com.example.projetsem2qrcode.service.FicheEmargementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,6 +23,12 @@ public class FicheEmargementController {
         this.ficheEmargementService = ficheEmargementService;
     }
 
+
+    @PostMapping("/liste")
+    public ResponseEntity<FicheEmargement> addFiche(@RequestBody FicheEmargement ficheEmargement){
+
+        return new ResponseEntity<>(ficheEmargementService.addFiche(ficheEmargement),HttpStatus.CREATED);
+    }
     @GetMapping("/liste/{nomCours}")
     public ResponseEntity<List<User>> getListeEtudiant(@PathVariable String nomCours){
         List<User> listeUserSigne = ficheEmargementService.getListeEtudiantSigneByCoursName(nomCours);

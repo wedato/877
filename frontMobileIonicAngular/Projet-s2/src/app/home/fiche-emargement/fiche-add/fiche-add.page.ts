@@ -43,12 +43,16 @@ export class FicheAddPage implements OnInit {
 
 
   onAddFiche() {
-    if (!this.form.valid){
-      return;
-    }
+    this.ficheService.addFiche(this.form.value.nomCours, this.form.value.dateCours)
+      .subscribe( {
+        next:(response) => {
+          this.ficheIsCreated = true;
+          this.myQrCode = response.id;
+        },
+        error: (error) => {
+          console.log(error)
+        }
+      })
 
-    const newFiche = (this.ficheService.addFiche(this.form.value.nomCours, this.form.value.dateCours))
-    this.ficheIsCreated = true;
-    this.myQrCode = newFiche.id;
   }
 }

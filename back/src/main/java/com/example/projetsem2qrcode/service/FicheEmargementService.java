@@ -45,4 +45,9 @@ public class FicheEmargementService {
 
 
     }
+    public void scannerFiche(String idFiche, String username){
+        Optional<FicheEmargement> ficheEmargement = ficheEmargementRepository.findById(idFiche);
+        ficheEmargement.get().getListeEleves().add(username);
+        ficheEmargementRepository.save(ficheEmargement.get());
+    }
 }

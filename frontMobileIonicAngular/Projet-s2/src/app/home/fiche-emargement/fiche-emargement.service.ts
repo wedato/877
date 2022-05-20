@@ -64,4 +64,7 @@ export class FicheEmargementService {
     // });
     return this.httpClient.delete(`${this.host}/fiche/liste/${ficheId}`)
   }
+  public signerFiche(idFiche: String, nomEtu:String): Observable<any>{
+    return this.httpClient.get(`${this.host}/fiche/liste/scan/${idFiche}/${nomEtu}`)
+  }
 }

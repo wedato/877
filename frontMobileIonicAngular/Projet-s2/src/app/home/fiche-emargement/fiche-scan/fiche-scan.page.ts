@@ -3,6 +3,7 @@ import {LoadingController, ToastController} from "@ionic/angular";
 import jsQR from "jsqr";
 import {FicheEmargementService} from "../fiche-emargement.service";
 import {FicheEmargement} from "../fiche-emargement.model";
+import {AuthService} from "../../../auth/auth.service";
 
 @Component({
   selector: 'app-fiche-scan',
@@ -24,12 +25,13 @@ export class FicheScanPage implements OnInit {
   scanResult = null;
   loading: HTMLIonLoadingElement = null;
   ficheEmargementActuel: FicheEmargement
-  utilisateurCo: string = "patrick"
+
 
   constructor(
     private toastCtrl: ToastController,
     private loadingCtrl: LoadingController,
-    private ficheEmargementService: FicheEmargementService
+    private ficheEmargementService: FicheEmargementService,
+    private authService: AuthService
 
   ){
 
@@ -71,6 +73,7 @@ export class FicheScanPage implements OnInit {
   }
 
   async scan() {
+
     if (this.videoElement.readyState === this.videoElement.HAVE_ENOUGH_DATA) {
       if (this.loading) {
         await this.loading.dismiss();
@@ -100,7 +103,7 @@ export class FicheScanPage implements OnInit {
 
       if (code) {
         this.scanActive = false;
-        this.scanResult = code.data.toString();
+        this.scanResult = code.data;
         this.signatureFicheViaQrCode()
       } else {
         if (this.scanActive) {
@@ -113,10 +116,18 @@ export class FicheScanPage implements OnInit {
   }
 
 
+
   signatureFicheViaQrCode(){
     this.ficheEmargementActuel = this.ficheEmargementService.getFiche(this.scanResult)
-    console.log(this.ficheEmargementActuel.nomCours)
-    this.ficheEmargementActuel.listeEleves.push(this.utilisateurCo)
+    this.ficheEmargementService.signerFiche(this.ficheEmargementActuel.id,this.authService.getUserFromLocalCache().username)
+      .subscribe({
+        next:(response) => {
+
+        },
+        error: (errResponse) => {
+          console.error(errResponse)
+        }
+      })
 
   }
 

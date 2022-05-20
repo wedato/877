@@ -45,6 +45,11 @@ public class FicheEmargementController {
         ficheEmargementService.signerFicheEmargementDebut(idFiche, nomEtu);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    @GetMapping("/liste/scan/{idFiche}/{username}")
+    public ResponseEntity<?> scanFiche(@PathVariable String idFiche, @PathVariable String username){
+        ficheEmargementService.scannerFiche(idFiche, username);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
     @DeleteMapping("/liste/{idFiche}")
     public ResponseEntity<?> deleteById(@PathVariable String idFiche){
         ficheEmargementService.deleteFicheById(idFiche);

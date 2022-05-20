@@ -1,29 +1,12 @@
 package com.example.projetsem2qrcode.controlleradmin;
 
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.anyBoolean;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.when;
-
 import com.example.projetsem2qrcode.config.JWTTokenProvider;
 import com.example.projetsem2qrcode.exceptions.EmailNotFoundException;
 import com.example.projetsem2qrcode.exceptions.UserNotFoundException;
 import com.example.projetsem2qrcode.modele.User;
-import com.example.projetsem2qrcode.service.UserService;
 import com.example.projetsem2qrcode.service.UserServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.io.IOException;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Date;
-
 import org.junit.jupiter.api.Disabled;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +27,15 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Date;
+
+import static org.mockito.Mockito.*;
+
 @ContextConfiguration(classes = {UserController.class})
 @ExtendWith(SpringExtension.class)
 class UserControllerTest {
@@ -53,6 +45,12 @@ class UserControllerTest {
 
     @MockBean
     private JWTTokenProvider jWTTokenProvider;
+
+    @Autowired
+    private UserController userController;
+
+    @MockBean
+    private UserServiceImpl userService;
 
     /**
      * Method under test: {@link UserController#getAllUsers()}
@@ -874,11 +872,7 @@ class UserControllerTest {
         actualPerformResult.andExpect(MockMvcResultMatchers.status().is(400));
     }
 
-    @Autowired
-    private UserController userController;
 
-    @MockBean
-    private UserServiceImpl userService;
 
 
 }

@@ -25,6 +25,10 @@ export class GroupeTpService {
         return this.http.delete<GroupeTp>(`${this.host}/api/groupetp/${nomGroupe}`)
     }
 
+    public updateGroupeTp(formData: FormData, nomGroupe: string): Observable<GroupeTp>{
+        return this.http.post<GroupeTp>(`${this.host}/api/groupetp/${nomGroupe}`, formData);
+      }
+
     public addGroupeTp(formData: FormData): Observable<GroupeTp>{
         // la raison pour laquelle on passe des request param -> le formData
         return this.http.post<GroupeTp>(`${this.host}/api/groupetp`, formData);

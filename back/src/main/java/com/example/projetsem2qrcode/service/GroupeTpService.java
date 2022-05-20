@@ -75,6 +75,7 @@ public class GroupeTpService {
         }
         _etudiant.setGroupeTp(_groupeTp.getNomGroupe());
         etudiantRepository.save(_etudiant);
+        _groupeTp.setNomGroupe(groupe);
         _groupeTp.getListeEtudiantGroupe().add(_etudiant);
         return groupeTpRepository.save(_groupeTp);
     }

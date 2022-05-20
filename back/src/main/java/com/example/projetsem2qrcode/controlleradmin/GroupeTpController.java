@@ -40,10 +40,10 @@ public class GroupeTpController {
         return ResponseEntity.ok(groupeTpService.getAllGroupeTp());
     }
 
-    @PutMapping("/groupetp/{numeroGroupe}")
-    public ResponseEntity<GroupeTp> addEtudiantAuGroupeTp(@PathVariable("numeroGroupe") String idGroupe ,@RequestBody String numEtudiant){
+    @PutMapping("/groupetp/{nomGroupe}")
+    public ResponseEntity<GroupeTp> addEtudiantAuGroupeTp(@PathVariable("nomGroupe") String nomGroupe ,@RequestBody String numEtudiant){
         try {
-            groupeTpService.addEtudiantInGroupe(idGroupe,numEtudiant);
+            groupeTpService.addEtudiantInGroupe(nomGroupe,numEtudiant);
             return ResponseEntity.status(202).build();
         } catch (GroupeInnexistantException | EtudiantInnexistantException e) {
             return ResponseEntity.status(404).build();

@@ -370,7 +370,7 @@ class CoursServiceTest {
     @Test
     void testAddGroupeTPAuCours()
             throws CoursInnexistantException, GroupeInnexistantException, GroupeTpDejaAjouterException {
-        when(this.groupeTpRepository.findByNumeroGroupe((String) any()))
+        when(this.groupeTpRepository.findByNomGroupe((String) any()))
                 .thenReturn(Optional.of(new GroupeTp("Numero Groupe")));
 
         Cours cours = new Cours();
@@ -392,7 +392,7 @@ class CoursServiceTest {
         when(this.coursRepository.save((Cours) any())).thenReturn(cours1);
         when(this.coursRepository.findCoursByNom((String) any())).thenReturn(ofResult);
         assertSame(cours1, this.coursService.addGroupeTPAuCours("Nom Cours", "Numero Groupe"));
-        verify(this.groupeTpRepository).findByNumeroGroupe((String) any());
+        verify(this.groupeTpRepository).findByNomGroupe((String) any());
         verify(this.coursRepository).save((Cours) any());
         verify(this.coursRepository).findCoursByNom((String) any());
     }
@@ -403,7 +403,7 @@ class CoursServiceTest {
     @Test
     void testAddGroupeTPAuCours2()
             throws CoursInnexistantException, GroupeInnexistantException, GroupeTpDejaAjouterException {
-        when(this.groupeTpRepository.findByNumeroGroupe((String) any())).thenReturn(Optional.empty());
+        when(this.groupeTpRepository.findByNomGroupe((String) any())).thenReturn(Optional.empty());
 
         Cours cours = new Cours();
         cours.setHeureDebut(LocalDate.ofEpochDay(1L));
@@ -424,7 +424,7 @@ class CoursServiceTest {
         when(this.coursRepository.findCoursByNom((String) any())).thenReturn(ofResult);
         assertThrows(GroupeInnexistantException.class,
                 () -> this.coursService.addGroupeTPAuCours("Nom Cours", "Numero Groupe"));
-        verify(this.groupeTpRepository).findByNumeroGroupe((String) any());
+        verify(this.groupeTpRepository).findByNomGroupe((String) any());
         verify(this.coursRepository).findCoursByNom((String) any());
     }
 
@@ -434,7 +434,7 @@ class CoursServiceTest {
     @Test
     void testAddGroupeTPAuCours3()
             throws CoursInnexistantException, GroupeInnexistantException, GroupeTpDejaAjouterException {
-        when(this.groupeTpRepository.findByNumeroGroupe((String) any()))
+        when(this.groupeTpRepository.findByNomGroupe((String) any()))
                 .thenReturn(Optional.of(new GroupeTp("Numero Groupe")));
 
         HashSet<GroupeTp> groupeTpSet = new HashSet<>();
@@ -459,7 +459,7 @@ class CoursServiceTest {
         when(this.coursRepository.findCoursByNom((String) any())).thenReturn(ofResult);
         assertThrows(GroupeTpDejaAjouterException.class,
                 () -> this.coursService.addGroupeTPAuCours("Nom Cours", "Numero Groupe"));
-        verify(this.groupeTpRepository).findByNumeroGroupe((String) any());
+        verify(this.groupeTpRepository).findByNomGroupe((String) any());
         verify(this.coursRepository).findCoursByNom((String) any());
     }
 
@@ -469,7 +469,7 @@ class CoursServiceTest {
     @Test
     void testAddGroupeTPAuCours4()
             throws CoursInnexistantException, GroupeInnexistantException, GroupeTpDejaAjouterException {
-        when(this.groupeTpRepository.findByNumeroGroupe((String) any()))
+        when(this.groupeTpRepository.findByNomGroupe((String) any()))
                 .thenReturn(Optional.of(new GroupeTp("Numero Groupe")));
 
         Cours cours = new Cours();
@@ -482,7 +482,7 @@ class CoursServiceTest {
         when(this.coursRepository.findCoursByNom((String) any())).thenReturn(Optional.empty());
         assertThrows(CoursInnexistantException.class,
                 () -> this.coursService.addGroupeTPAuCours("Nom Cours", "Numero Groupe"));
-        verify(this.groupeTpRepository).findByNumeroGroupe((String) any());
+        verify(this.groupeTpRepository).findByNomGroupe((String) any());
         verify(this.coursRepository).findCoursByNom((String) any());
     }
 

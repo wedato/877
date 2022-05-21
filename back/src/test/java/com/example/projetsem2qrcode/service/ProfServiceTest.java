@@ -42,9 +42,11 @@ class ProfServiceTest {
      */
     @Test
     void testSaveProf() throws NomProfInvalideException, PrenomProfInvalideException, ProfDejaCreerException {
+        //when
         when(this.profRepository.save((Prof) any())).thenReturn(new Prof("42", "Nom", "Prenom", new HashSet<>()));
         when(this.profRepository.findByNom((String) any()))
                 .thenReturn(Optional.of(new Prof("42", "Nom", "Prenom", new HashSet<>())));
+        //assert
         assertThrows(ProfDejaCreerException.class,
                 () -> this.profService.saveProf(new Prof("42", "Nom", "Prenom", new HashSet<>())));
         verify(this.profRepository).findByNom((String) any());
@@ -55,10 +57,13 @@ class ProfServiceTest {
      */
     @Test
     void testSaveProf3() throws NomProfInvalideException, PrenomProfInvalideException, ProfDejaCreerException {
+        //given
         Prof prof = new Prof("42", "Nom", "Prenom", new HashSet<>());
 
+        //when
         when(this.profRepository.save((Prof) any())).thenReturn(prof);
         when(this.profRepository.findByNom((String) any())).thenReturn(Optional.empty());
+        //Assert
         assertSame(prof, this.profService.saveProf(new Prof("42", "Nom", "Prenom", new HashSet<>())));
         verify(this.profRepository).save((Prof) any());
         verify(this.profRepository).findByNom((String) any());
@@ -69,9 +74,11 @@ class ProfServiceTest {
      */
     @Test
     void testSaveProf4() throws NomProfInvalideException, PrenomProfInvalideException, ProfDejaCreerException {
+        //when
         when(this.profRepository.save((Prof) any())).thenReturn(new Prof("42", "Nom", "Prenom", new HashSet<>()));
         when(this.profRepository.findByNom((String) any()))
                 .thenReturn(Optional.of(new Prof("42", "Nom", "Prenom", new HashSet<>())));
+        //Assert
         assertThrows(NomProfInvalideException.class,
                 () -> this.profService.saveProf(new Prof("42", null, "Prenom", new HashSet<>())));
     }
@@ -81,9 +88,11 @@ class ProfServiceTest {
      */
     @Test
     void testSaveProf5() throws NomProfInvalideException, PrenomProfInvalideException, ProfDejaCreerException {
+        //when
         when(this.profRepository.save((Prof) any())).thenReturn(new Prof("42", "Nom", "Prenom", new HashSet<>()));
         when(this.profRepository.findByNom((String) any()))
                 .thenReturn(Optional.of(new Prof("42", "Nom", "Prenom", new HashSet<>())));
+        //Assert
         assertThrows(NomProfInvalideException.class,
                 () -> this.profService.saveProf(new Prof("42", "", "Prenom", new HashSet<>())));
     }
@@ -93,9 +102,11 @@ class ProfServiceTest {
      */
     @Test
     void testSaveProf6() throws NomProfInvalideException, PrenomProfInvalideException, ProfDejaCreerException {
+        //when
         when(this.profRepository.save((Prof) any())).thenReturn(new Prof("42", "Nom", "Prenom", new HashSet<>()));
         when(this.profRepository.findByNom((String) any()))
                 .thenReturn(Optional.of(new Prof("42", "Nom", "Prenom", new HashSet<>())));
+        //Assert
         assertThrows(PrenomProfInvalideException.class,
                 () -> this.profService.saveProf(new Prof("42", "Nom", null, new HashSet<>())));
     }
@@ -105,9 +116,11 @@ class ProfServiceTest {
      */
     @Test
     void testSaveProf7() throws NomProfInvalideException, PrenomProfInvalideException, ProfDejaCreerException {
+        //when
         when(this.profRepository.save((Prof) any())).thenReturn(new Prof("42", "Nom", "Prenom", new HashSet<>()));
         when(this.profRepository.findByNom((String) any()))
                 .thenReturn(Optional.of(new Prof("42", "Nom", "Prenom", new HashSet<>())));
+        //assert
         assertThrows(PrenomProfInvalideException.class,
                 () -> this.profService.saveProf(new Prof("42", "Nom", "", new HashSet<>())));
     }

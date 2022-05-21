@@ -91,7 +91,7 @@ export class AuthService {
     newUser.firstName = password;
     newUser.lastName = password;
     newUser.email =email;
-    return this.httpClient.post<HttpResponse<any>>(`${this.host}/register/no-generated-password`, newUser, {observe: "response"});
+    return this.httpClient.post<HttpResponse<any>>(`${this.host}/user/register/no-generated-password`, newUser, {observe: "response"});
   }
 
 }

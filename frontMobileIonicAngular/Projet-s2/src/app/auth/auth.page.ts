@@ -46,9 +46,7 @@ export class AuthPage implements OnInit {
     this.isLoading = true;
     this.authService.signup(username,password,firstName,lastName,email).subscribe({
       next:(response) => {
-        const token = response.headers.get('Jwt-Token');
-        this.authService.saveToken(token);
-        this.authService.addUserToLocalCache(response.body);
+
       }
     })
 
@@ -61,13 +59,21 @@ export class AuthPage implements OnInit {
     if (!form.valid) {
       return;
     }
-    const username = form.value.username;
-    const password = form.value.password;
+
     if (this.isLogin){
+      const username = form.value.username;
+      const password = form.value.password;
+
       this.onLogin(username,password)
 
     } else {
-      // envoie requete signup
+      const username = form.value.username;
+      const password = form.value.password;
+      const firstName = form.value.firstName;
+      const lastName = form.value.lastName;
+      const email = form.value.email;
+      this.onSignUp(username,password,firstName,lastName,email)
+      this.onLogin(username,password)
     }
   }
 

@@ -37,9 +37,11 @@ class GroupeTpServiceTest {
      */
     @Test
     void testSaveGroupeTp() throws GroupeDejaCreerException, NomGroupeNonValideException {
+        //when
         when(this.groupeTpRepository.save((GroupeTp) any())).thenReturn(new GroupeTp("Numero Groupe"));
         when(this.groupeTpRepository.findByNomGroupe((String) any()))
                 .thenReturn(Optional.of(new GroupeTp("Numero Groupe")));
+        //assert
         assertThrows(GroupeDejaCreerException.class, () -> this.groupeTpService.saveGroupeTp("Nom Groupe"));
         verify(this.groupeTpRepository).findByNomGroupe((String) any());
     }
@@ -49,9 +51,12 @@ class GroupeTpServiceTest {
      */
     @Test
     void testSaveGroupeTp2() throws GroupeDejaCreerException, NomGroupeNonValideException {
+        //given
         GroupeTp groupeTp = new GroupeTp("Numero Groupe");
+        //when
         when(this.groupeTpRepository.save((GroupeTp) any())).thenReturn(groupeTp);
         when(this.groupeTpRepository.findByNomGroupe((String) any())).thenReturn(Optional.empty());
+        //Assert
         assertSame(groupeTp, this.groupeTpService.saveGroupeTp("Nom Groupe"));
         verify(this.groupeTpRepository).save((GroupeTp) any());
         verify(this.groupeTpRepository).findByNomGroupe((String) any());
@@ -63,8 +68,10 @@ class GroupeTpServiceTest {
      */
     @Test
     void testSaveGroupeTp4() throws GroupeDejaCreerException, NomGroupeNonValideException {
+        //when
         when(this.groupeTpRepository.save((GroupeTp) any())).thenReturn(new GroupeTp("Numero Groupe"));
         when(this.groupeTpRepository.findByNomGroupe((String) any())).thenReturn(Optional.empty());
+        //Assert
         assertThrows(NomGroupeNonValideException.class, () -> this.groupeTpService.saveGroupeTp(null));
         verify(this.groupeTpRepository).findByNomGroupe((String) any());
     }
@@ -74,8 +81,10 @@ class GroupeTpServiceTest {
      */
     @Test
     void testSaveGroupeTp5() throws GroupeDejaCreerException, NomGroupeNonValideException {
+        //when
         when(this.groupeTpRepository.save((GroupeTp) any())).thenReturn(new GroupeTp("Numero Groupe"));
         when(this.groupeTpRepository.findByNomGroupe((String) any())).thenReturn(Optional.empty());
+        //Assert
         assertThrows(NomGroupeNonValideException.class, () -> this.groupeTpService.saveGroupeTp(""));
         verify(this.groupeTpRepository).findByNomGroupe((String) any());
     }

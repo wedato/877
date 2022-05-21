@@ -43,6 +43,7 @@ class CoursServiceTest {
      */
     @Test
     void testCreateCours() throws CoursDejaCreerException, NomCourInvalidException, PasHoraireException {
+        //given
         Cours cours = new Cours();
         cours.setHeureDebut(LocalDate.ofEpochDay(1L));
         cours.setHeureFin(LocalDate.ofEpochDay(1L));
@@ -59,8 +60,10 @@ class CoursServiceTest {
         cours1.setNom("Nom");
         cours1.setProf(new Prof("42", "Nom", "Prenom", new HashSet<>()));
         Optional<Cours> ofResult = Optional.of(cours1);
+        //when
         when(this.coursRepository.findCoursByNom((String) any())).thenReturn(ofResult);
 
+        //given
         Cours cours2 = new Cours();
         cours2.setHeureDebut(LocalDate.ofEpochDay(1L));
         cours2.setHeureFin(LocalDate.ofEpochDay(1L));
@@ -68,6 +71,7 @@ class CoursServiceTest {
         cours2.setLesGroupes(new HashSet<>());
         cours2.setNom("Nom");
         cours2.setProf(new Prof("42", "Nom", "Prenom", new HashSet<>()));
+        //Assert
         assertThrows(CoursDejaCreerException.class, () -> this.coursService.createCours(cours2));
         verify(this.coursRepository).findCoursByNom((String) any());
     }
@@ -77,6 +81,7 @@ class CoursServiceTest {
      */
     @Test
     void testCreateCours3() throws CoursDejaCreerException, NomCourInvalidException, PasHoraireException {
+        //given
         Cours cours = new Cours();
         cours.setHeureDebut(LocalDate.ofEpochDay(1L));
         cours.setHeureFin(LocalDate.ofEpochDay(1L));
@@ -84,9 +89,11 @@ class CoursServiceTest {
         cours.setLesGroupes(new HashSet<>());
         cours.setNom("Nom");
         cours.setProf(new Prof("42", "Nom", "Prenom", new HashSet<>()));
+        //when
         when(this.coursRepository.save((Cours) any())).thenReturn(cours);
         when(this.coursRepository.findCoursByNom((String) any())).thenReturn(Optional.empty());
 
+        //given
         Cours cours1 = new Cours();
         cours1.setHeureDebut(LocalDate.ofEpochDay(1L));
         cours1.setHeureFin(LocalDate.ofEpochDay(1L));
@@ -94,6 +101,7 @@ class CoursServiceTest {
         cours1.setLesGroupes(new HashSet<>());
         cours1.setNom("Nom");
         cours1.setProf(new Prof("42", "Nom", "Prenom", new HashSet<>()));
+        //Assert
         assertSame(cours, this.coursService.createCours(cours1));
         verify(this.coursRepository).save((Cours) any());
         verify(this.coursRepository).findCoursByNom((String) any());
@@ -104,6 +112,7 @@ class CoursServiceTest {
      */
     @Test
     void testCreateCours4() throws CoursDejaCreerException, NomCourInvalidException, PasHoraireException {
+        //given
         Cours cours = new Cours();
         cours.setHeureDebut(LocalDate.ofEpochDay(1L));
         cours.setHeureFin(LocalDate.ofEpochDay(1L));
@@ -121,6 +130,7 @@ class CoursServiceTest {
         cours1.setProf(new Prof("42", "Nom", "Prenom", new HashSet<>()));
         Optional<Cours> ofResult = Optional.of(cours1);
         Cours cours2 = mock(Cours.class);
+        //when
         when(cours2.getHeureFin()).thenReturn(null);
         when(cours2.getHeureDebut()).thenReturn(LocalDate.ofEpochDay(1L));
         when(cours2.getNom()).thenReturn("Nom");
@@ -136,6 +146,7 @@ class CoursServiceTest {
         cours2.setLesGroupes(new HashSet<>());
         cours2.setNom("Nom");
         cours2.setProf(new Prof("42", "Nom", "Prenom", new HashSet<>()));
+        //assert
         assertThrows(PasHoraireException.class, () -> this.coursService.createCours(cours2));
         verify(cours2, atLeast(1)).getNom();
         verify(cours2).getHeureDebut();
@@ -153,6 +164,7 @@ class CoursServiceTest {
      */
     @Test
     void testCreateCours5() throws CoursDejaCreerException, NomCourInvalidException, PasHoraireException {
+        //given
         Cours cours = new Cours();
         cours.setHeureDebut(LocalDate.ofEpochDay(1L));
         cours.setHeureFin(LocalDate.ofEpochDay(1L));
@@ -170,6 +182,7 @@ class CoursServiceTest {
         cours1.setProf(new Prof("42", "Nom", "Prenom", new HashSet<>()));
         Optional<Cours> ofResult = Optional.of(cours1);
         Cours cours2 = mock(Cours.class);
+        //when
         when(cours2.getHeureDebut()).thenReturn(null);
         when(cours2.getNom()).thenReturn("Nom");
         doNothing().when(cours2).setHeureDebut((LocalDate) any());
@@ -184,6 +197,7 @@ class CoursServiceTest {
         cours2.setLesGroupes(new HashSet<>());
         cours2.setNom("Nom");
         cours2.setProf(new Prof("42", "Nom", "Prenom", new HashSet<>()));
+        //assert
         assertThrows(PasHoraireException.class, () -> this.coursService.createCours(cours2));
         verify(cours2, atLeast(1)).getNom();
         verify(cours2).getHeureDebut();
@@ -368,11 +382,13 @@ class CoursServiceTest {
      * Method under test: {@link CoursService#addGroupeTPAuCours(String, String)}
      */
     @Test
-    void testAddGroupeTPAuCours()
+    void testAddGroupeTPAuCoursOk()
             throws CoursInnexistantException, GroupeInnexistantException, GroupeTpDejaAjouterException {
+        //when
         when(this.groupeTpRepository.findByNomGroupe((String) any()))
                 .thenReturn(Optional.of(new GroupeTp("Numero Groupe")));
 
+        //given
         Cours cours = new Cours();
         cours.setHeureDebut(LocalDate.ofEpochDay(1L));
         cours.setHeureFin(LocalDate.ofEpochDay(1L));
@@ -389,8 +405,10 @@ class CoursServiceTest {
         cours1.setLesGroupes(new HashSet<>());
         cours1.setNom("Nom");
         cours1.setProf(new Prof("42", "Nom", "Prenom", new HashSet<>()));
+        //when
         when(this.coursRepository.save((Cours) any())).thenReturn(cours1);
         when(this.coursRepository.findCoursByNom((String) any())).thenReturn(ofResult);
+        //assert
         assertSame(cours1, this.coursService.addGroupeTPAuCours("Nom Cours", "Numero Groupe"));
         verify(this.groupeTpRepository).findByNomGroupe((String) any());
         verify(this.coursRepository).save((Cours) any());
@@ -403,8 +421,10 @@ class CoursServiceTest {
     @Test
     void testAddGroupeTPAuCours2()
             throws CoursInnexistantException, GroupeInnexistantException, GroupeTpDejaAjouterException {
+        //when
         when(this.groupeTpRepository.findByNomGroupe((String) any())).thenReturn(Optional.empty());
 
+        //given
         Cours cours = new Cours();
         cours.setHeureDebut(LocalDate.ofEpochDay(1L));
         cours.setHeureFin(LocalDate.ofEpochDay(1L));
@@ -421,7 +441,9 @@ class CoursServiceTest {
         cours1.setLesGroupes(new HashSet<>());
         cours1.setNom("Nom");
         cours1.setProf(new Prof("42", "Nom", "Prenom", new HashSet<>()));
+        //when
         when(this.coursRepository.findCoursByNom((String) any())).thenReturn(ofResult);
+        //assert
         assertThrows(GroupeInnexistantException.class,
                 () -> this.coursService.addGroupeTPAuCours("Nom Cours", "Numero Groupe"));
         verify(this.groupeTpRepository).findByNomGroupe((String) any());
@@ -434,9 +456,11 @@ class CoursServiceTest {
     @Test
     void testAddGroupeTPAuCours3()
             throws CoursInnexistantException, GroupeInnexistantException, GroupeTpDejaAjouterException {
+        //when
         when(this.groupeTpRepository.findByNomGroupe((String) any()))
                 .thenReturn(Optional.of(new GroupeTp("Numero Groupe")));
 
+        //given
         HashSet<GroupeTp> groupeTpSet = new HashSet<>();
         groupeTpSet.add(new GroupeTp("Numero Groupe"));
 
@@ -456,7 +480,9 @@ class CoursServiceTest {
         cours1.setLesGroupes(new HashSet<>());
         cours1.setNom("Nom");
         cours1.setProf(new Prof("42", "Nom", "Prenom", new HashSet<>()));
+        //when
         when(this.coursRepository.findCoursByNom((String) any())).thenReturn(ofResult);
+        //assert
         assertThrows(GroupeTpDejaAjouterException.class,
                 () -> this.coursService.addGroupeTPAuCours("Nom Cours", "Numero Groupe"));
         verify(this.groupeTpRepository).findByNomGroupe((String) any());
@@ -469,9 +495,11 @@ class CoursServiceTest {
     @Test
     void testAddGroupeTPAuCours4()
             throws CoursInnexistantException, GroupeInnexistantException, GroupeTpDejaAjouterException {
+        //when
         when(this.groupeTpRepository.findByNomGroupe((String) any()))
                 .thenReturn(Optional.of(new GroupeTp("Numero Groupe")));
 
+        //given
         Cours cours = new Cours();
         cours.setHeureDebut(LocalDate.ofEpochDay(1L));
         cours.setHeureFin(LocalDate.ofEpochDay(1L));
@@ -479,7 +507,9 @@ class CoursServiceTest {
         cours.setLesGroupes(new HashSet<>());
         cours.setNom("Nom");
         cours.setProf(new Prof("42", "Nom", "Prenom", new HashSet<>()));
+        //when
         when(this.coursRepository.findCoursByNom((String) any())).thenReturn(Optional.empty());
+        //Assert
         assertThrows(CoursInnexistantException.class,
                 () -> this.coursService.addGroupeTPAuCours("Nom Cours", "Numero Groupe"));
         verify(this.groupeTpRepository).findByNomGroupe((String) any());
@@ -491,9 +521,11 @@ class CoursServiceTest {
      */
     @Test
     void testAddProfAuCours() throws CoursInnexistantException, ProfDejaAjouterException, ProfInnexistantExcepton {
+        //when
         when(this.profRepository.findByNom((String) any()))
                 .thenReturn(Optional.of(new Prof("42", "Nom", "Prenom", new HashSet<>())));
 
+        //given
         Cours cours = new Cours();
         cours.setHeureDebut(LocalDate.ofEpochDay(1L));
         cours.setHeureFin(LocalDate.ofEpochDay(1L));
@@ -502,7 +534,9 @@ class CoursServiceTest {
         cours.setNom("Nom");
         cours.setProf(new Prof("42", "Nom", "Prenom", new HashSet<>()));
         Optional<Cours> ofResult = Optional.of(cours);
+        //when
         when(this.coursRepository.findCoursByNom((String) any())).thenReturn(ofResult);
+        //assert
         assertThrows(ProfDejaAjouterException.class, () -> this.coursService.addProfAuCours("Nom Cours", "Nom Prof"));
         verify(this.profRepository).findByNom((String) any());
         verify(this.coursRepository).findCoursByNom((String) any());
@@ -513,10 +547,12 @@ class CoursServiceTest {
      */
     @Test
     void testAddProfAuCours2() throws CoursInnexistantException, ProfDejaAjouterException, ProfInnexistantExcepton {
+        //when
         when(this.profRepository.save((Prof) any())).thenReturn(new Prof("42", "Nom", "Prenom", new HashSet<>()));
         when(this.profRepository.findByNom((String) any()))
                 .thenReturn(Optional.of(new Prof("42", "com.example.projetsem2qrcode.modele.Prof", "Prenom", new HashSet<>())));
 
+        //given
         Cours cours = new Cours();
         cours.setHeureDebut(LocalDate.ofEpochDay(1L));
         cours.setHeureFin(LocalDate.ofEpochDay(1L));
@@ -533,8 +569,10 @@ class CoursServiceTest {
         cours1.setLesGroupes(new HashSet<>());
         cours1.setNom("Nom");
         cours1.setProf(new Prof("42", "Nom", "Prenom", new HashSet<>()));
+        //when
         when(this.coursRepository.save((Cours) any())).thenReturn(cours1);
         when(this.coursRepository.findCoursByNom((String) any())).thenReturn(ofResult);
+        //assert
         assertSame(cours1, this.coursService.addProfAuCours("Nom Cours", "Nom Prof"));
         verify(this.profRepository).save((Prof) any());
         verify(this.profRepository).findByNom((String) any());
@@ -548,6 +586,7 @@ class CoursServiceTest {
     @Test
     void testAddProfAuCours3() throws CoursInnexistantException, ProfDejaAjouterException, ProfInnexistantExcepton {
 
+        //given
         Cours cours = new Cours();
         cours.setHeureDebut(LocalDate.ofEpochDay(1L));
         cours.setHeureFin(LocalDate.ofEpochDay(1L));
@@ -565,9 +604,11 @@ class CoursServiceTest {
         cours1.setNom("Nom");
         cours1.setProf(new Prof("42", "Nom", "Prenom", new HashSet<>()));
 
+        //when
         when(this.profRepository.findByNom((String) any())).thenReturn(Optional.empty());
         when(this.coursRepository.findCoursByNom((String) any())).thenReturn(ofResult);
 
+        //assert
         assertThrows(ProfInnexistantExcepton.class, () -> this.coursService.addProfAuCours("Nom Cours", "Nom Prof"));
         verify(this.profRepository).findByNom((String) any());
         verify(this.coursRepository).findCoursByNom((String) any());
@@ -579,6 +620,7 @@ class CoursServiceTest {
     @Test
     void testAddProfAuCours4() throws CoursInnexistantException, ProfDejaAjouterException, ProfInnexistantExcepton {
 
+        //given
         Cours cours = mock(Cours.class);
         cours.setHeureDebut(LocalDate.ofEpochDay(1L));
         cours.setHeureFin(LocalDate.ofEpochDay(1L));
@@ -596,8 +638,10 @@ class CoursServiceTest {
         cours1.setNom("Nom");
         cours1.setProf(new Prof("42", "Nom", "Prenom", new HashSet<>()));
 
+        //when
         when(this.profRepository.findByNom((String) any())).thenReturn(Optional.of(new Prof("42", "com.example.projetsem2qrcode.modele.Prof", "Prenom", new HashSet<>())));
 
+        //assert
         assertThrows(CoursInnexistantException.class, () -> this.coursService.addProfAuCours("Nom Cours", "Nom Prof"));
     }
 

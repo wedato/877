@@ -73,6 +73,7 @@ export class AuthService {
     newUser.password = password;
     return this.httpClient.post<HttpResponse<any>>(`${this.host}/user/login`, newUser, {observe: "response"});
   }
+
   logout() {
     this.token = null;
     this.loggedInUsername = null;
@@ -83,8 +84,14 @@ export class AuthService {
     this._userIsAuthenticated = false;
   }
 
-  // signup(username:string, password:string,){
-  //
-  // }
+  signup(username:string, password:string, firstName:string, lastName:string, email:string): Observable<HttpResponse<any>>{
+    const newUser = new User();
+    newUser.username = username;
+    newUser.password = password;
+    newUser.firstName = password;
+    newUser.lastName = password;
+    newUser.email =email;
+    return this.httpClient.post<HttpResponse<any>>(`${this.host}/register/no-generated-password`, newUser, {observe: "response"});
+  }
 
 }

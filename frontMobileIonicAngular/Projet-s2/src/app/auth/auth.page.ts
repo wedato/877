@@ -42,6 +42,21 @@ export class AuthPage implements OnInit {
 
   }
 
+  onSignUp(username:string, password:string, firstName:string, lastName:string, email:string) {
+    this.isLoading = true;
+    this.authService.signup(username,password,firstName,lastName,email).subscribe({
+      next:(response) => {
+        const token = response.headers.get('Jwt-Token');
+        this.authService.saveToken(token);
+        this.authService.addUserToLocalCache(response.body);
+      }
+    })
+
+
+
+
+  }
+
   onSubmit(form:NgForm) {
     if (!form.valid) {
       return;

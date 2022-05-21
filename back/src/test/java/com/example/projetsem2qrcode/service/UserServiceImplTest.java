@@ -1,52 +1,32 @@
 package com.example.projetsem2qrcode.service;
 
-import com.example.projetsem2qrcode.exceptions.EmailExistException;
-import com.example.projetsem2qrcode.exceptions.EmailNotFoundException;
-import com.example.projetsem2qrcode.exceptions.NotAnImageFileException;
-import com.example.projetsem2qrcode.exceptions.UserNotFoundException;
-import com.example.projetsem2qrcode.exceptions.UsernameExistException;
+import com.example.projetsem2qrcode.config.Role;
+import com.example.projetsem2qrcode.exceptions.*;
 import com.example.projetsem2qrcode.modele.User;
 import com.example.projetsem2qrcode.repository.UserRepository;
-
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
-
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.anyBoolean;
-import static org.mockito.Mockito.atLeast;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @ContextConfiguration(classes = {UserServiceImpl.class, BCryptPasswordEncoder.class})
 @ExtendWith(MockitoExtension.class)
@@ -54,8 +34,6 @@ class UserServiceImplTest {
 
     @Autowired
     private UserServiceImpl userServiceImpl;
-
-    private UserServiceImpl underTest;
     @Mock
     private UserRepository userRepository;
     @Mock
@@ -68,7 +46,7 @@ class UserServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        underTest = new UserServiceImpl(userRepository, passwordEncoder, loginAttemptService, emailService);
+        userServiceImpl = new UserServiceImpl(userRepository, passwordEncoder, loginAttemptService, emailService);
     }
 
     /**
@@ -166,13 +144,8 @@ class UserServiceImplTest {
         user1.setRole("Role");
         user1.setSignedEndClass(true);
         user1.setUsername("janedoe");
-        when(this.userRepository.save((User) any())).thenReturn(user1);
-        when(this.userRepository.findUserByUsername((String) any())).thenReturn(user);
-        when(this.loginAttemptService.hasExceededMaxAttempts((String) any()))
-                .thenThrow(new UsernameNotFoundException("Msg"));
         assertThrows(UsernameNotFoundException.class, () -> this.userServiceImpl.loadUserByUsername("janedoe"));
         verify(this.userRepository).findUserByUsername((String) any());
-        verify(this.loginAttemptService).hasExceededMaxAttempts((String) any());
     }
 
     /**
@@ -390,7 +363,6 @@ class UserServiceImplTest {
         user2.setUsername("janedoe");
         when(this.userRepository.findUserByEmail((String) any())).thenReturn(user);
         when(this.userRepository.findUserByUsername((String) any())).thenReturn(user1);
-        when(this.userRepository.save((User) any())).thenReturn(user2);
         assertThrows(UsernameExistException.class, () -> this.userServiceImpl.addNewAdmin());
         verify(this.userRepository).findUserByEmail((String) any());
         verify(this.userRepository).findUserByUsername((String) any());
@@ -520,7 +492,6 @@ class UserServiceImplTest {
         user2.setUsername("janedoe");
         when(this.userRepository.findUserByEmail((String) any())).thenReturn(user);
         when(this.userRepository.findUserByUsername((String) any())).thenReturn(user1);
-        when(this.userRepository.save((User) any())).thenReturn(user2);
         assertThrows(UsernameExistException.class, () -> this.userServiceImpl.addJo());
         verify(this.userRepository).findUserByEmail((String) any());
         verify(this.userRepository).findUserByUsername((String) any());
@@ -591,24 +562,8 @@ class UserServiceImplTest {
      * Method under test: {@link UserServiceImpl#updateUser(String, String, String, String, String, String, boolean, boolean, org.springframework.web.multipart.MultipartFile)}
      */
     @Test
-    @Disabled("TODO: Complete this test")
     void testUpdateUser()
             throws EmailExistException, NotAnImageFileException, UserNotFoundException, UsernameExistException, IOException {
-        // TODO: Complete this test.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   java.lang.IllegalArgumentException: No enum constant com.example.projetsem2qrcode.config.Role.ROLE
-        //       at java.lang.Enum.valueOf(Enum.java:240)
-        //       at com.example.projetsem2qrcode.config.Role.valueOf(Role.java:3)
-        //       at com.example.projetsem2qrcode.service.UserServiceImpl.getRoleEnumName(UserServiceImpl.java:255)
-        //       at com.example.projetsem2qrcode.service.UserServiceImpl.updateUser(UserServiceImpl.java:177)
-        //   In order to prevent updateUser(String, String, String, String, String, String, boolean, boolean, MultipartFile)
-        //   from throwing IllegalArgumentException, add constructors or factory
-        //   methods that make it easier to construct fully initialized objects used in
-        //   updateUser(String, String, String, String, String, String, boolean, boolean, MultipartFile).
-        //   See https://diff.blue/R013 to resolve this issue.
-
         User user = new User();
         user.setAuthorities(new String[]{"JaneDoe"});
         user.setEmail("jane.doe@example.org");
@@ -648,8 +603,8 @@ class UserServiceImplTest {
         user1.setUsername("janedoe");
         when(this.userRepository.findUserByEmail((String) any())).thenReturn(user);
         when(this.userRepository.findUserByUsername((String) any())).thenReturn(user1);
-        this.userServiceImpl.updateUser("janedoe", "Jane", "Doe", "janedoe", "jane.doe@example.org", "Role", true, true,
-                new MockMultipartFile("Name", new ByteArrayInputStream("AAAAAAAA".getBytes("UTF-8"))));
+        assertThrows(NotAnImageFileException.class,() ->this.userServiceImpl.updateUser("janedoe", "Jane", "Doe", "janedoe", "jane.doe@example.org", String.valueOf(Role.ROLE_USER), true, true,
+                new MockMultipartFile("Name", new ByteArrayInputStream("AAAAAAAA".getBytes("UTF-8")))));
     }
 
     /**
@@ -892,43 +847,6 @@ class UserServiceImplTest {
         assertThrows(UsernameNotFoundException.class, () -> this.userServiceImpl.deleteUser("janedoe"));
         verify(this.userRepository).findUserByUsername((String) any());
         verify(this.userRepository).deleteById((String) any());
-    }
-
-    /**
-     * Method under test: {@link UserServiceImpl#deleteUser(String)}
-     */
-    @Test
-    @Disabled("TODO: Complete this test")
-    void testDeleteUser3() throws UserNotFoundException, IOException {
-        // TODO: Complete this test.
-        //   Reason: R011 Sandboxing policy violation.
-        //   Diffblue Cover ran code in your project that tried
-        //     to access files outside the temporary directory (file '/Users/peredalouis/supportportal/user', permission 'delete').
-        //   Diffblue Cover's default sandboxing policy disallows this in order to prevent
-        //   your code from damaging your system environment.
-        //   See https://diff.blue/R011 to resolve this issue.
-
-        User user = new User();
-        user.setAuthorities(new String[]{"JaneDoe"});
-        user.setEmail("jane.doe@example.org");
-        user.setFirstName("Jane");
-        user.setId("42");
-        LocalDateTime atStartOfDayResult = LocalDate.of(1970, 1, 1).atStartOfDay();
-        user.setJoinDate(Date.from(atStartOfDayResult.atZone(ZoneId.of("UTC")).toInstant()));
-        LocalDateTime atStartOfDayResult1 = LocalDate.of(1970, 1, 1).atStartOfDay();
-        user.setLastLoginDate(Date.from(atStartOfDayResult1.atZone(ZoneId.of("UTC")).toInstant()));
-        LocalDateTime atStartOfDayResult2 = LocalDate.of(1970, 1, 1).atStartOfDay();
-        user.setLastLoginDateDisplay(Date.from(atStartOfDayResult2.atZone(ZoneId.of("UTC")).toInstant()));
-        user.setLastName("Doe");
-        user.setNotLocked(true);
-        user.setPassword("iloveyou");
-        user.setProfileImageUrl("https://example.org/example");
-        user.setRole("Role");
-        user.setSignedEndClass(true);
-        user.setUsername("");
-        doNothing().when(this.userRepository).deleteById((String) any());
-        when(this.userRepository.findUserByUsername((String) any())).thenReturn(user);
-        this.userServiceImpl.deleteUser("janedoe");
     }
 
     /**

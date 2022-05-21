@@ -6,7 +6,6 @@ import com.example.projetsem2qrcode.exceptions.UserNotFoundException;
 import com.example.projetsem2qrcode.modele.User;
 import com.example.projetsem2qrcode.service.UserServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,6 @@ import org.springframework.security.authentication.LockedException;
 import org.springframework.security.authentication.TestingAuthenticationToken;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -422,61 +420,6 @@ class UserControllerTest {
                                 "{\"firstName\":\"Jane\",\"lastName\":\"Doe\",\"username\":\"janedoe\",\"email\":\"jane.doe@example.org\",\"profileImageUrl"
                                         + "\":\"https://example.org/example\",\"lastLoginDate\":0,\"lastLoginDateDisplay\":0,\"joinDate\":0,\"role\":\"Role"
                                         + "\",\"authorities\":[\"JaneDoe\"],\"signedEndClass\":true,\"notLocked\":true}"));
-    }
-
-    /**
-     * Method under test: {@link UserController#updateProfileImage(String, org.springframework.web.multipart.MultipartFile)}
-     */
-    @Test
-    @Disabled("TODO: Complete this test")
-    void testUpdateProfileImage() throws Exception {
-        // TODO: Complete this test.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   org.springframework.web.multipart.MultipartException: Current request is not a multipart request
-        //       at org.springframework.web.method.annotation.RequestParamMethodArgumentResolver.handleMissingValueInternal(RequestParamMethodArgumentResolver.java:210)
-        //       at org.springframework.web.method.annotation.RequestParamMethodArgumentResolver.handleMissingValue(RequestParamMethodArgumentResolver.java:193)
-        //       at org.springframework.web.method.annotation.AbstractNamedValueMethodArgumentResolver.resolveArgument(AbstractNamedValueMethodArgumentResolver.java:114)
-        //       at org.springframework.web.method.support.HandlerMethodArgumentResolverComposite.resolveArgument(HandlerMethodArgumentResolverComposite.java:122)
-        //       at org.springframework.web.method.support.InvocableHandlerMethod.getMethodArgumentValues(InvocableHandlerMethod.java:179)
-        //       at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:146)
-        //       at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117)
-        //       at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895)
-        //       at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808)
-        //       at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
-        //       at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1067)
-        //       at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:963)
-        //       at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
-        //       at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:909)
-        //       at javax.servlet.http.HttpServlet.service(HttpServlet.java:681)
-        //       at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
-        //       at org.springframework.test.web.servlet.TestDispatcherServlet.service(TestDispatcherServlet.java:72)
-        //       at javax.servlet.http.HttpServlet.service(HttpServlet.java:764)
-        //       at org.springframework.mock.web.MockFilterChain$ServletFilterProxy.doFilter(MockFilterChain.java:167)
-        //       at org.springframework.mock.web.MockFilterChain.doFilter(MockFilterChain.java:134)
-        //       at org.springframework.test.web.servlet.MockMvc.perform(MockMvc.java:199)
-        //   In order to prevent perform(RequestBuilder)
-        //   from throwing MultipartException, add constructors or factory
-        //   methods that make it easier to construct fully initialized objects used in
-        //   perform(RequestBuilder).
-        //   See https://diff.blue/R013 to resolve this issue.
-
-        // Arrange
-        // TODO: Populate arranged inputs
-        Object[] uriVars = new Object[]{};
-        MockHttpServletRequestBuilder postResult = MockMvcRequestBuilders.post("/user/updateProfileImage", uriVars);
-        String[] values = new String[]{String.valueOf((Object) null)};
-        String[] values1 = new String[]{"foo"};
-        MockHttpServletRequestBuilder requestBuilder = postResult.param("profileImage", values).param("username", values1);
-        Object[] controllers = new Object[]{this.userController};
-        MockMvc buildResult = MockMvcBuilders.standaloneSetup(controllers).build();
-
-        // Act
-        ResultActions actualPerformResult = buildResult.perform(requestBuilder);
-
-        // Assert
-        // TODO: Add assertions on result
     }
 
     /**

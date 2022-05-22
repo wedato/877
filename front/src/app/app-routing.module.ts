@@ -19,6 +19,7 @@ const routes: Routes = [
   {path: 'emargement', component: ListeEmargementComponent},
   {path: 'groupe', component: GroupeTpComponent},
   {path: '', redirectTo: '/login', pathMatch:'full' },
+  {path: '**', redirectTo: 'user/management' },
   // {path: '' , redirectTo: 'etudiants', pathMatch:'full'},
   // {path: 'etudiants' , component: EtudiantsListComponent},
   // {path: 'etudiants/:id' , component: EtudiantDetailsComponent},

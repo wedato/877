@@ -17,6 +17,11 @@ export class AuthPage implements OnInit {
   }
 
   ngOnInit() {
+    if (this.authService.isUserLoggedIn()){
+      this.router.navigateByUrl('');
+    } else {
+      this.router.navigateByUrl('/auth')
+    }
   }
 
   onLogin(username:string, password:string) {

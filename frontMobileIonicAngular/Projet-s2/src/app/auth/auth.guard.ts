@@ -14,15 +14,22 @@ import {AuthService} from "./auth.service";
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanLoad {
+export class AuthGuard implements CanActivate {
 constructor(private authService: AuthService, private router: Router) {
 }
 
-  canLoad(route: Route, segments: UrlSegment[]): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-  if (!this.authService.userIsAuthenticated){
-    this.router.navigateByUrl('/auth')
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):  boolean {
+    return this.isUserLoggedIn();
   }
-    return this.authService.userIsAuthenticated;
+
+  private isUserLoggedIn(): boolean {
+    if (this.authService.isUserLoggedIn()){
+      console.log("coucou")
+      return true;
+    }
+    this.router.navigate(['/auth']);
+    // this.notificationService.notify(NotificationType.ERROR, `Vous devez vous connectez pour acceder à cette page`.toUpperCase() )
+    return false;
   }
 
 

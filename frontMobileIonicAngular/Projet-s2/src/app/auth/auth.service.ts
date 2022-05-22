@@ -8,7 +8,7 @@ import { JwtHelperService } from "@auth0/angular-jwt";
   providedIn: 'root'
 })
 export class AuthService {
-  private _userIsAuthenticated = false;
+  // private _userIsAuthenticated = false;
   private _userId = 'abc'
   private token: string;
   private loggedInUsername: string;
@@ -58,16 +58,16 @@ export class AuthService {
 
 
 
-  get userIsAuthenticated(): boolean {
-    return this._userIsAuthenticated;
-  }
+  // get userIsAuthenticated(): boolean {
+  //   return this._userIsAuthenticated;
+  // }
 
   get userId(): string {
     return this._userId;
   }
 
   login(username: string, password:string): Observable<HttpResponse<any>>{
-    this._userIsAuthenticated = true;
+    // this._userIsAuthenticated = true;
     const newUser = new User();
     newUser.username = username;
     newUser.password = password;
@@ -81,7 +81,7 @@ export class AuthService {
     localStorage.removeItem('user');
     localStorage.removeItem('token');
     localStorage.removeItem('users');
-    this._userIsAuthenticated = false;
+    // this._userIsAuthenticated = false;
   }
 
   signup(username:string, password:string, firstName:string, lastName:string, email:string): Observable<HttpResponse<any>>{

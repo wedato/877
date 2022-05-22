@@ -51,7 +51,11 @@ export class AuthPage implements OnInit {
     this.isLoading = true;
     this.authService.signup(username,password,firstName,lastName,email).subscribe({
       next:(response) => {
-
+        this.isLogin = true;
+        this.router.navigateByUrl('/auth');
+      },
+      error:(error) => {
+        console.log(error)
       }
     })
 
@@ -78,7 +82,7 @@ export class AuthPage implements OnInit {
       const lastName = form.value.lastName;
       const email = form.value.email;
       this.onSignUp(username,password,firstName,lastName,email)
-      this.onLogin(username,password)
+
     }
   }
 

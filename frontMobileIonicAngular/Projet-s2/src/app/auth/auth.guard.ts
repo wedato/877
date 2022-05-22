@@ -24,7 +24,6 @@ constructor(private authService: AuthService, private router: Router) {
 
   private isUserLoggedIn(): boolean {
     if (this.authService.isUserLoggedIn()){
-      console.log("coucou")
       return true;
     }
     this.router.navigate(['/auth']);

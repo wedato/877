@@ -9,6 +9,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
@@ -21,13 +23,13 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
 
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @ContextConfiguration(classes = {EtudiantController.class})
 @ExtendWith(SpringExtension.class)
+@AutoConfigureRestDocs(outputDir = "target/generated-sniped")
+@AutoConfigureMockMvc
 class EtudiantControllerTest {
 
     @Autowired
@@ -46,7 +48,7 @@ class EtudiantControllerTest {
         ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(this.etudiantController)
                 .build()
                 .perform(requestBuilder);
-        actualPerformResult.andExpect(MockMvcResultMatchers.status().isNoContent());
+        actualPerformResult.andExpect(MockMvcResultMatchers.status().isNoContent()).andDo(print());
     }
 
     /**
@@ -60,7 +62,7 @@ class EtudiantControllerTest {
         ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(this.etudiantController)
                 .build()
                 .perform(deleteResult);
-        actualPerformResult.andExpect(MockMvcResultMatchers.status().isNoContent());
+        actualPerformResult.andExpect(MockMvcResultMatchers.status().isNoContent()).andDo(print());
     }
 
     /**
@@ -73,7 +75,7 @@ class EtudiantControllerTest {
         MockMvcBuilders.standaloneSetup(this.etudiantController)
                 .build()
                 .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk());
+                .andExpect(MockMvcResultMatchers.status().isOk()).andDo(print());
     }
 
     /**
@@ -87,7 +89,7 @@ class EtudiantControllerTest {
         MockMvcBuilders.standaloneSetup(this.etudiantController)
                 .build()
                 .perform(putResult)
-                .andExpect(MockMvcResultMatchers.status().isOk());
+                .andExpect(MockMvcResultMatchers.status().isOk()).andDo(print());
     }
 
     /**
@@ -123,6 +125,7 @@ class EtudiantControllerTest {
                 .perform(requestBuilder);
         actualPerformResult.andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+                .andDo(print())
                 .andExpect(MockMvcResultMatchers.content()
                         .string(
                                 "{\"nom\":\"Nom\",\"prenom\":\"Prenom\",\"numEtudiant\":\"Num Etudiant\",\"groupeTp\":\"Groupe Tp\",\"emargement"
@@ -151,7 +154,7 @@ class EtudiantControllerTest {
         ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(this.etudiantController)
                 .build()
                 .perform(requestBuilder);
-        actualPerformResult.andExpect(MockMvcResultMatchers.status().is(409));
+        actualPerformResult.andExpect(MockMvcResultMatchers.status().is(409)).andDo(print());
     }
 
     /**
@@ -175,7 +178,7 @@ class EtudiantControllerTest {
         ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(this.etudiantController)
                 .build()
                 .perform(requestBuilder);
-        actualPerformResult.andExpect(MockMvcResultMatchers.status().is(400));
+        actualPerformResult.andExpect(MockMvcResultMatchers.status().is(400)).andDo(print());
     }
 
     /**
@@ -189,7 +192,7 @@ class EtudiantControllerTest {
         ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(this.etudiantController)
                 .build()
                 .perform(requestBuilder);
-        actualPerformResult.andExpect(MockMvcResultMatchers.status().isNoContent());
+        actualPerformResult.andExpect(MockMvcResultMatchers.status().isNoContent()).andDo(print());
     }
 
     /**
@@ -204,7 +207,7 @@ class EtudiantControllerTest {
         ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(this.etudiantController)
                 .build()
                 .perform(deleteResult);
-        actualPerformResult.andExpect(MockMvcResultMatchers.status().isNoContent());
+        actualPerformResult.andExpect(MockMvcResultMatchers.status().isNoContent()).andDo(print());
     }
 
     /**
@@ -218,7 +221,7 @@ class EtudiantControllerTest {
         ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(this.etudiantController)
                 .build()
                 .perform(requestBuilder);
-        actualPerformResult.andExpect(MockMvcResultMatchers.status().isNotFound());
+        actualPerformResult.andExpect(MockMvcResultMatchers.status().isNotFound()).andDo(print());
     }
 
     /**
@@ -233,7 +236,7 @@ class EtudiantControllerTest {
         ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(this.etudiantController)
                 .build()
                 .perform(requestBuilder);
-        actualPerformResult.andExpect(MockMvcResultMatchers.status().isNoContent());
+        actualPerformResult.andExpect(MockMvcResultMatchers.status().isNoContent()).andDo(print());
     }
 
     /**
@@ -249,7 +252,7 @@ class EtudiantControllerTest {
         ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(this.etudiantController)
                 .build()
                 .perform(deleteResult);
-        actualPerformResult.andExpect(MockMvcResultMatchers.status().isNoContent());
+        actualPerformResult.andExpect(MockMvcResultMatchers.status().isNoContent()).andDo(print());
     }
 
     /**
@@ -263,6 +266,7 @@ class EtudiantControllerTest {
                 .build()
                 .perform(requestBuilder)
                 .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(print())
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
                 .andExpect(MockMvcResultMatchers.content().string("[]"));
     }
@@ -279,6 +283,7 @@ class EtudiantControllerTest {
                 .build()
                 .perform(getResult)
                 .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(print())
                 .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
                 .andExpect(MockMvcResultMatchers.content().string("[]"));
     }
@@ -306,7 +311,8 @@ class EtudiantControllerTest {
                 .andExpect(MockMvcResultMatchers.content()
                         .string(
                                 "{\"nom\":\"Nom\",\"prenom\":\"Prenom\",\"numEtudiant\":\"Num Etudiant\",\"groupeTp\":\"Groupe Tp\",\"emargement"
-                                        + "\":true}"));
+                                        + "\":true}"))
+                .andDo(print());
     }
 
     /**
@@ -333,7 +339,8 @@ class EtudiantControllerTest {
                 .andExpect(MockMvcResultMatchers.content()
                         .string(
                                 "{\"nom\":\"Nom\",\"prenom\":\"Prenom\",\"numEtudiant\":\"Num Etudiant\",\"groupeTp\":\"Groupe Tp\",\"emargement"
-                                        + "\":true}"));
+                                        + "\":true}"))
+                .andDo(print());
     }
 
     /**
@@ -347,7 +354,7 @@ class EtudiantControllerTest {
         ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(this.etudiantController)
                 .build()
                 .perform(requestBuilder);
-        actualPerformResult.andExpect(MockMvcResultMatchers.status().isNotFound());
+        actualPerformResult.andExpect(MockMvcResultMatchers.status().isNotFound()).andDo(print());
     }
 
     /**
@@ -384,7 +391,8 @@ class EtudiantControllerTest {
                 .andExpect(MockMvcResultMatchers.content()
                         .string(
                                 "{\"nom\":\"Nom\",\"prenom\":\"Prenom\",\"numEtudiant\":\"Num Etudiant\",\"groupeTp\":\"Groupe Tp\",\"emargement"
-                                        + "\":true}"));
+                                        + "\":true}"))
+                .andDo(print());
     }
 
     /**
@@ -410,6 +418,6 @@ class EtudiantControllerTest {
         ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(this.etudiantController)
                 .build()
                 .perform(requestBuilder);
-        actualPerformResult.andExpect(MockMvcResultMatchers.status().isNotFound());
+        actualPerformResult.andExpect(MockMvcResultMatchers.status().isNotFound()).andDo(print());
     }
 }

@@ -9,12 +9,13 @@ import {RegisterComponent} from "./components/register/register.component";
 import {UserComponent} from "./components/user/user.component";
 import {ListeEmargementComponent} from "./components/liste-emargement/liste-emargement.component";
 import { GroupeTpComponent } from "./components/groupe-tp/groupe-tp.component";
+import {AuthenticationGuard} from "./guard/authentication.guard";
 
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
-  {path: 'user/management', component: UserComponent},
+  {path: 'user/management', component: UserComponent , canActivate:[AuthenticationGuard]},
   {path: 'emargement', component: ListeEmargementComponent},
   {path: 'groupe', component: GroupeTpComponent},
   {path: '', redirectTo: '/login', pathMatch:'full' },
